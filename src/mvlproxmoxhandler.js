@@ -3,9 +3,10 @@ const ProxmoxConnector = require('./connector');
 
 class MVLProxmoxHandler extends MVLoaderBase {
     constructor (...config) {
-        let defaults = {
+        const defaults = {
             node: 'promo-test',
             baseIDForClone: '200',
+            baseHostnameForClone: 'promo',
             username: '',
             password: '',
             hostname: '',
@@ -37,13 +38,17 @@ class MVLProxmoxHandler extends MVLoaderBase {
     }
 
     async getStatusVM(vmid) {
-        let result = await this.connector.get(`/nodes/${this.config.node}/lxc/${vmid}/status/current`);
+        const result = await this.connector.get(`/nodes/${this.config.node}/lxc/${vmid}/status/current`);
         return JSON.parse(result).data;
     }
 
     async cloneVM(newid) {
-        let url = `/nodes/${this.config.node}/lxc/${this.config.baseIDForClone}/clone`;
-        return await this.connector.post(url, {newid});
+        const url = `/nodes/${this.config.node}/lxc/${this.config.baseIDForClone}/clone`;
+        const options = {
+            newid,
+            hostname: this.config.baseHostnameForClone + newid,
+        };
+        return await this.connector.post(url, options);
     }
 }
 
