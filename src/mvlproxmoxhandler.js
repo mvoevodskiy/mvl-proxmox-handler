@@ -4,9 +4,9 @@ const ProxmoxConnector = require('./connector');
 class MVLProxmoxHandler extends MVLoaderBase {
     constructor (...config) {
         const defaults = {
-            node: 'promo-test',
-            baseIDForClone: '200',
-            baseHostnameForClone: 'promo',
+            node: '',
+            baseIDForClone: '',
+            baseHostnameForClone: '',
             username: '',
             password: '',
             hostname: '',
