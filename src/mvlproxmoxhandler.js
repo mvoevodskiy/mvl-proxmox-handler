@@ -42,8 +42,13 @@ class MVLProxmoxHandler extends MVLoaderBase {
         return JSON.parse(result).data;
     }
 
-    async cloneVM(newid) {
-        const url = `/nodes/${this.config.node}/lxc/${this.config.baseIDForClone}/clone`;
+    async cloneVM(sourceid, newid) {
+        if (!newid) {
+            newid = sourceid;
+            sourceid = this.config.baseIDForClone;
+        }
+
+        const url = `/nodes/${this.config.node}/lxc/${sourceid}/clone`;
         const options = {
             newid,
             hostname: this.config.baseHostnameForClone + newid,
