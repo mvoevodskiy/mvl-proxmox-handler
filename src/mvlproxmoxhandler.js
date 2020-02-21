@@ -50,6 +50,11 @@ class MVLProxmoxHandler extends MVLoaderBase {
         };
         return await this.connector.post(url, options);
     }
+
+    async getVMsList() {
+        const result =  await this.connector.get(`/nodes/${this.config.node}/lxc`);
+        return JSON.parse(result).data;
+    }
 }
 
 module.exports = MVLProxmoxHandler;
